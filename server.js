@@ -34,10 +34,9 @@ mongoose.connect(mongoURI, {
       type: String,
       required: true,
     }
-});
+}, { timestamps: true });
   
-const User = mongoose.model('User', userSchema);
-  
+const User = mongoose.model('User', userSchema); 
 
 app.post('/api/save-data', async (req, res) => {
   const { username, email, phone, message } = req.body;
@@ -55,6 +54,31 @@ app.post('/api/save-data', async (req, res) => {
     res.status(500).json({ message: 'Server error', error });
   }
 });
+
+const adminCredentials = {
+  username: "admin",
+  password: "admin123",  
+};
+
+app.post('/api/admin/login', (req, res) => {
+  const { username, password } = req.body;
+
+  if (username === adminCredentials.username && password === adminCredentials.password) {
+    return res.status(200).json({ message: 'Login successful' });
+  } else {
+    return res.status(401).json({ message: 'Invalid credentials' });
+  }
+});
+
+app.get('/api/admin/users', async (req, res) => {
+  try {
+    const users = await User.find();  // Fetch all users from MongoDB
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+});
+
   
 
 app.listen(PORT, () => {
