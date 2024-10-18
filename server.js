@@ -12,7 +12,13 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+
+const corsOptions = {
+  origin: ["http://localhost:3000", "https://soft-alfajores-51ccf5.netlify.app"],
+  credentials:true
+}
+app.use(cors(corsOptions));
 
 // Connect Database
 connectDB();
