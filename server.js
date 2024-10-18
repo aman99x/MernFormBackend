@@ -15,7 +15,7 @@ app.use(express.json());
 // app.use(cors());
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://soft-alfajores-51ccf5.netlify.app"],
+  origin: ["http://localhost:5173", "https://soft-alfajores-51ccf5.netlify.app"],
   credentials:true
 }
 app.use(cors(corsOptions));
